@@ -34,6 +34,7 @@ body {
 
 #headerBlock .title a {
     text-decoration: none;
+    color: #F6F4F8;
 }
 
 #headerBlock .title a:hover {
@@ -94,7 +95,6 @@ body {
     #footerBlock {
         font-size: .6em;
     }
-    
     #md2html iframe {
         height: 300px;
     }
