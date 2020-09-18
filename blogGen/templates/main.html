@@ -1,0 +1,63 @@
+<html>
+
+<head>
+    <title>{{title}}</title>
+
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" type="text/css" href="/blogGen/templates/md2html.css">
+    <link rel="stylesheet" type="text/css" href="/blogGen/templates/style.css">
+
+    {{ads}}
+    <script async src='https://www.googletagmanager.com/gtag/js?id=UA-560719-1'></script>
+    <script>
+        window.dataLayer = window.dataLayer || [];
+
+        function gtag() {
+            dataLayer.push(arguments);
+        }
+        gtag('js', new Date());
+        gtag('config', 'UA-560719-1');
+    </script>
+
+
+</head>
+
+<body>
+
+    <div id="backsplash"
+        style="background-color: #003366; background-image: url('data:image/gif;base64,R0lGODlhBwAHAJEAAAA0ZwAzZgAyZQAAACH5BAAAAAAALAAAAAAHAAcAAAIOBCIZl7KoTFvMGUjxbQUAOw==');">
+    </div>
+
+    <div id="content">
+
+        <div id="pageAboveArticle">
+            <div id="headerBlock">
+                <div id="headerMenu">
+                    <div class='menuButton'><a href='/'>Home</a></div>
+                    <div class='menuButton'><a href='/blog'>Blog</a></div>
+                    <div class='menuButton'><a href='/about'>About</a></div>
+                </div>
+                <div class='title'>{{siteTitle}}</div>
+                <div class='subtitle'>{{siteSubtitle}}</div>
+            </div>
+        </div>
+
+        {{content}}
+
+        <div id="lowerNavBar">
+            {{lowerNav}}
+        </div>
+
+        <footer>
+            <div id="footerBlock">
+                {{footer}}
+            </div>
+        </footer>
+
+    </div>
+
+    <script async src='https://cdn.jsdelivr.net/gh/google/code-prettify@master/loader/run_prettify.js'></script>
+
+</body>
+
+</html>
