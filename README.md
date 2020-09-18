@@ -2,6 +2,14 @@
 
 This repository is a collection of code and resources related to my personal website. It is intended as a way for me to maintain records of what I work on, and code here is not intended to be run by others.
 
+### Running with Docker
+
+Run run this website on http://localhost:8080
+
+```bash
+docker-compose up -d
+```
+
 ### Markdown-to-HTML with PHP
 
 My website now uses a variant of [md2html-php](https://github.com/swharden/md2html-php) I made just for serving my blog pages on my personal website. In making it I learned a lot, and I want to note a few of my thoughts here.
