@@ -6,13 +6,20 @@ require_once __DIR__ . "/models/BlogPosts.php";
 
 class PageOfPosts extends Page
 {
-    function __construct(string $blog_post_folder, int $page_number, int $posts_per_page = 5)
+    function __construct(string $blog_post_folder, int $page_number, int $posts_per_page = 5, string $tag = "all")
     {
-		if ($page_number == 1){
-			$this->allowAds = false;
-		}
-        $post = new BlogPosts($blog_post_folder);
-        $articles = $post->newestFirst;
+        if ($page_number == 1) {
+            $this->allowAds = false;
+        }
+
+        $articles = [];
+        $allPosts = new BlogPosts($blog_post_folder);
+        foreach ($allPosts->newestFirst as $article) {
+            if ($tag == "all" || in_array($tag, $article->tags)) {
+                $articles[] = $article;
+            }
+        }
+
         $totalPages = count($articles) / $posts_per_page;
         $page_index = $page_number - 1;
         $articles = array_slice($articles, $page_index * $posts_per_page, $posts_per_page);
@@ -25,15 +32,15 @@ class PageOfPosts extends Page
 
         $pageLinks = [];
         for ($i = 1; $i < $totalPages + 1; $i++) {
-			$link = "<a href='/blog/page/$i'>page $i</a>";
-			if ($i==$page_number)
-				$link = "<b>$link</b>";
+            $link = "<a href='/blog/page/$i'>page $i</a>";
+            if ($i == $page_number)
+                $link = "<b>$link</b>";
             $pageLinks[] = $link;
         }
-		$nav = "<div>" . join(", ", $pageLinks) . "</div>";
-		$nav .= "<div><a href='/blog/posts'>All Blog Posts</a></div>";
+        $nav = "<div>" . join(", ", $pageLinks) . "</div>";
+        $nav .= "<div><a href='/blog/posts'>All Blog Posts</a></div>";
         $this->lowerNav = $nav;
-		$this->title = "Blog Page {$page_number}";
+        $this->title = "Blog Page {$page_number}";
         $this->content = $html;
     }
 }
