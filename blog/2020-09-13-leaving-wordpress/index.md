@@ -1,6 +1,8 @@
 ---
 title: Leaving WordPress
 date: 2020-09-13 18:15:00
+tags:
+  - testing
 ---
 
 # Leaving WordPress
