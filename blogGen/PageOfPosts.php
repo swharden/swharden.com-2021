@@ -32,7 +32,8 @@ class PageOfPosts extends Page
 
         $pageLinks = [];
         for ($i = 1; $i < $totalPages + 1; $i++) {
-            $link = "<a href='/blog/page/$i'>page $i</a>";
+            $pageUrl = ($tag == "all") ? "/blog/page" : "/blog/category/$tag";
+            $link = "<a href='$pageUrl/$i'>page $i</a>";
             if ($i == $page_number)
                 $link = "<b>$link</b>";
             $pageLinks[] = $link;
