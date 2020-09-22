@@ -41,7 +41,7 @@ class PageOfPosts extends Page
         $nav = "<div>" . join(", ", $pageLinks) . "</div>";
         $nav .= "<div><a href='/blog/posts'>All Blog Posts</a></div>";
         $this->lowerNav = $nav;
-        $this->title = "Blog Page {$page_number}";
+        $this->title = ($tag == "all") ? "All Posts - Page {$page_number}" : "Posts Tagged '" . ucwords($tag) . "' - Page {$page_number}";
         $this->content = $html;
     }
 }
