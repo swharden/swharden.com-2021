@@ -201,3 +201,12 @@ footer a:hover {
 #lowerNavBar div {
     margin: 1em 0em;
 }
+
+.postMeta {
+    position: relative;
+    top: -1em;
+    line-height: 1.2em;
+    float: right;
+    text-align: right;
+    font-size: 80%;
+}

@@ -100,9 +100,22 @@ class BlogPost
 
         // add metadata
         if ($this->showMeta) {
+
             $time = date("g:i A", $this->epochTime);
             $day = date("F jS, Y", $this->epochTime);
-            $meta = "<div style='position: relative; top: -1em; line-height: 1.2em; float: right; text-align: right; font-size: 80%;'><a href='$this->url_folder'>$this->title</a><br>$day</div>";
+
+            $tags = [];
+            foreach ($this->tags as $tag)
+                $tags[] = "<a href='/blog/category/$tag'>$tag</a>";
+            $tags = join(", ", $tags);
+            //if (strlen($tags) > 0)
+                //$tags = "Categories " . $tags;
+
+            $meta = "<div class='postMeta'>";
+            $meta .= "<div><a href='$this->url_folder'>$this->title</a></div>";
+            $meta .= "<div>Posted on $day</div>";
+            $meta .= "<div>$tags</div>";
+            $meta .= "</div>";
             $html = $meta . $html;
         }
 
