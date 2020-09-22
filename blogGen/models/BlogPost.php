@@ -106,7 +106,7 @@ class BlogPost
 
             $tags = [];
             foreach ($this->tags as $tag)
-                $tags[] = "<a href='/blog/category/$tag'>$tag</a>";
+                $tags[] = "<a href='/blog/category/" . str_replace(" ", "-", $tag) . "'>$tag</a>";
             $tags = join(", ", $tags);
             //if (strlen($tags) > 0)
                 //$tags = "Categories " . $tags;

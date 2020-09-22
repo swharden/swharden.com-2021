@@ -15,7 +15,7 @@ class PageOfPosts extends Page
         $articles = [];
         $allPosts = new BlogPosts($blog_post_folder);
         foreach ($allPosts->newestFirst as $article) {
-            if ($tag == "all" || in_array($tag, $article->tags)) {
+            if ($tag == "all" || in_array(str_replace("-", " ", $tag), $article->tags)) {
                 $articles[] = $article;
             }
         }
@@ -32,7 +32,7 @@ class PageOfPosts extends Page
 
         $pageLinks = [];
         for ($i = 1; $i < $totalPages + 1; $i++) {
-            $pageUrl = ($tag == "all") ? "/blog/page" : "/blog/category/$tag";
+            $pageUrl = ($tag == "all") ? "/blog/page" : "/blog/category/" . str_replace(" ", "-", $tag);
             $link = "<a href='$pageUrl/$i'>page $i</a>";
             if ($i == $page_number)
                 $link = "<b>$link</b>";
