@@ -22,6 +22,7 @@ class RssFeed
             $rss .= "            <link>https://swharden.com$post->url_folder</link>\n";
             //$rss .= "            <description>$post->html</description>\n";
             //$rss .= "            <content:encoded>$post->html</content:encoded>\n";
+            $rss .= "            <pubDate>" . date("r", $post->epochTime) . "</pubDate>\n";
             $rss .= "        </item>\n";
         }
         $rss .= "    </channel>\n</rss>";
