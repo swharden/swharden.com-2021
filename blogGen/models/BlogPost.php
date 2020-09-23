@@ -91,7 +91,7 @@ class BlogPost
         $Parsedown = new Parsedown();
         $html = $Parsedown->text($modified_markdown);
 
-        // line by line tweak of the HTML
+        // Add anchors to tags and populate table of contents
         $html = $this->addAnchorsToHeadings($html);
 
         // HTML-wide search/replace
@@ -109,7 +109,7 @@ class BlogPost
                 $tags[] = "<a href='/blog/category/" . str_replace(" ", "-", $tag) . "'>$tag</a>";
             $tags = join(", ", $tags);
             //if (strlen($tags) > 0)
-                //$tags = "Categories " . $tags;
+            //$tags = "Categories " . $tags;
 
             $meta = "<div class='postMeta'>";
             $meta .= "<div><a href='$this->url_folder'>$this->title</a></div>";
@@ -159,6 +159,7 @@ class BlogPost
     /* give headings anchor links with a little chain graphic */
     private function addAnchorsToHeadings($html)
     {
+        $toc = "";
         $lines = explode("\n", $html);
         for ($i = 0; $i < count($lines); $i++) {
             $line = $lines[$i];
@@ -178,8 +179,20 @@ class BlogPost
                 "4.95l1.25-1.25a.75.75 0 00-1.06-1.06l-1.25 1.25a2 2 0 01-2.83 0z'></path></svg></a>";
             $text = "<span class='anchorText'>$headerLabel</span>";
             $lines[$i] = "<h$headerLevel id='$url'>$anchor$text</h$headerLevel>";
+
+            $tocIndent = "&nbsp;&nbsp;&nbsp;&nbsp;";
+            $tocIndent = str_repeat($tocIndent, $headerLevel - 1);
+            $toc .= "<div>$tocIndent<a href='#$url'>$text</a></div>";
         }
-        return join("\n", $lines);
+        $html = join("\n", $lines);
+        $html = str_replace("<!--TOC-->", $toc, $html);
+        return $html;
+    }
+
+    /* generate markdown table of contents */
+    private function markdownTableOfContents()
+    {
+        return "asdf";
     }
 
     /* tweak special ![](linksLikeThis) */
@@ -187,9 +200,10 @@ class BlogPost
     {
         $url = substr($line, 4, strlen($line) - 5);
 
-        // TODO: table of contents
-
-        // TODO: dynamic inclusion?
+        // If this is a table of contents, come back to it later
+        if ($url == "TOC") {
+            return "<!--TOC-->";
+        }
 
         // make YouTube links embedded videos
         $isYouTube = startsWith($url, "https://www.youtube.com/embed/");
