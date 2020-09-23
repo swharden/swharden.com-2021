@@ -208,7 +208,7 @@ class BlogPost
         // make YouTube links embedded videos
         $isYouTube = startsWith($url, "https://www.youtube.com/embed/");
         if ($isYouTube) {
-            return "<iframe src='$url' frameborder='0' " .
+            return "<iframe class='youtube' src='$url' frameborder='0' " .
                 'allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" ' .
                 'allowfullscreen></iframe>';
         }
