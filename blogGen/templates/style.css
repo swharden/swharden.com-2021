@@ -91,6 +91,10 @@ body {
     }
     #headerBlock .title {
         font-size: 2em;
+        margin-left: .5em;
+    }
+    #headerBlock .subtitle {
+        margin-left: 1em;
     }
     #footerBlock {
         font-size: .6em;
