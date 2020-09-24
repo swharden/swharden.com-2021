@@ -174,8 +174,8 @@ footer a:hover {
     max-width: 100% !important;
 }
 
-.center img, .center iframe {
-    margin: 2em auto 2em auto;
+.center img, .center iframe, .center table {
+    margin: 2em auto 2em auto !important;
 }
 
 .border img, .border iframe {
