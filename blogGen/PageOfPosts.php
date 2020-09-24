@@ -27,7 +27,17 @@ class PageOfPosts extends Page
         $html = "";
         foreach ($articles as $article) {
             $post = new BlogPost($article->markdown_file_path, false, true, true);
-            $html .= $post->html;
+            $postHTML = $post->html;
+
+            // spare traditional URLs
+            $postHTML = str_replace('href="http', '{{HREF_HTTP}}', $postHTML);
+
+            // add folder path to relative URLs
+            $postHTML = str_replace('href="', 'href="' . $post->url_folder . '/', $postHTML);
+
+            // restore traditional URLs
+            $postHTML = str_replace('{{HREF_HTTP}}', 'href="http', $postHTML);
+            $html .= $postHTML;
         }
 
         $pageLinks = [];
@@ -44,7 +54,7 @@ class PageOfPosts extends Page
 
         $titlePrefix = ($tag == "all") ? "All Posts" : ucwords(str_replace("-", " ", $tag));
         $this->title = "$titlePrefix  - Page {$page_number}";
-        
+
         $this->content = $html;
     }
 }
