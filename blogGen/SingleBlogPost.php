@@ -12,7 +12,8 @@ class SingleBlogPost extends Page
         $this->footer = "<a href='?source'>view source</a>";
 
         if (isset($_GET["source"])) {
-			$codeHtml = htmlentities($post->markdown);
+            $codeHtml = htmlentities($post->markdown);
+            $this->allowIndexing = false;
             $this->content = "<article><div id='md2html'>" .
                 "<div><strong>Source code for <a href='$post->url_folder'>$post->title</a></strong></div>" .
                 "<pre style='white-space: pre-wrap; font-size: 80%; line-height: 1.4em; background-color: #f9f9f9; " .
