@@ -381,9 +381,10 @@ class ListOfPosts extends Page
             $timestamp = date("Y-m-d", $post->epochTime);
             $tags = [];
             foreach ($post->tags as $tag) {
-                $tags[] = "<span style='color: #ccc;'>$tag</span>";
+                $tagUrl = str_replace(" ", "-", $tag);
+                $tags[] = "<div class='listTag'><a class='tagLink' href='/blog/category/$tagUrl'>$tag</a></div>";
             }
-            $tags = "<span style='color: #ccc;'>" . join(", ", $tags) . "</span>";
+            $tags = "<div class='listTags'>" . join(" ", $tags) . "</div>";
             $postLines[] = "<div><li>$timestamp <a href='$post->url_folder'>$post->title</a> $tags</div>";
         }
 
@@ -391,7 +392,7 @@ class ListOfPosts extends Page
             $parts = explode("|", $oldPost);
             $timestamp = $parts[0];
             $title = $parts[1];
-            $postLines[] = "<div><li>$timestamp $title <span style='color: #ccc;'>private</span></div>";
+            $postLines[] = "<div><li>$timestamp $title <img style='opacity: .2;' src='/blogGen/templates/lock.png'></div>";
         }
 
         rsort($postLines);

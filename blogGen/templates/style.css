@@ -214,3 +214,31 @@ footer a:hover {
     text-align: right;
     font-size: 80%;
 }
+
+.listTags {
+    display: inline;
+    font-size: 80%;
+    color: #ccc;
+}
+
+.listTag {
+    display: inline;
+    background-color: #fafafa;
+    color: #ccc;
+    border: 1px solid #f0f0f0;
+    padding: 0em .2em;
+}
+
+.listTag:hover {
+    background-color: #f0f0f0;
+}
+
+.tagLink {
+    color: #cccccc !important;
+    text-decoration: none;
+}
+
+.listTag a:hover {
+    color: blue !important;
+    text-decoration: underline;
+}
