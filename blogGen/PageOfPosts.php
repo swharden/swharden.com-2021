@@ -27,23 +27,18 @@ class PageOfPosts extends Page
         $html = "";
         foreach ($articles as $article) {
             $post = new BlogPost($article->markdown_file_path, false, true, true);
-            $postHTML = $post->html;
 
-            // if URLs are already correct then spare them
-            $postHTML = str_replace('href="http', '{{HTTP_HREF}}', $postHTML);
-            $postHTML = str_replace('src="' . $post->url_folder, '{{LOCAL_SRC}}', $postHTML);
-            $postHTML = str_replace('href="' . $post->url_folder, '{{LOCAL_HREF}}', $postHTML);
-
-            // add folder path to remaining URLs (all of which are relative)
-            $postHTML = str_replace('href="', 'href="' . $post->url_folder . '/', $postHTML);
-            $postHTML = str_replace('src="', 'src="' . $post->url_folder . '/', $postHTML);
-
-            // restore the spared URLs
-            $postHTML = str_replace('{{HTTP_HREF}}', 'href="http', $postHTML);
-            $postHTML = str_replace('{{LOCAL_SRC}}', 'src="' . $post->url_folder, $postHTML);
-            $postHTML = str_replace('{{LOCAL_HREF}}', 'href="' . $post->url_folder, $postHTML);
-
-            $html .= $postHTML;
+            if (isset($_GET["source"])) {
+                $codeHtml = htmlentities($post->markdown);
+                $this->allowIndexing = false;
+                $html .= "<article><div id='md2html'>" .
+                    "<div><strong>Source code for <a href='$post->url_folder'>$post->title</a></strong></div>" .
+                    "<pre style='white-space: pre-wrap; font-size: 80%; line-height: 1.4em; background-color: #f9f9f9; " .
+                    "border: 1px solid #eee; padding: 1em;'>$codeHtml</pre>" .
+                    "</div></article>";
+            } else {
+                $html .= $this->getHtmlWithFixedLinks($post);
+            }
         }
 
         $pageLinks = [];
@@ -60,7 +55,29 @@ class PageOfPosts extends Page
 
         $titlePrefix = ($tag == "all") ? "All Posts" : ucwords(str_replace("-", " ", $tag));
         $this->title = "$titlePrefix  - Page {$page_number}";
-
+        $this->footer = "<a href='?source'>view source</a>";
         $this->content = $html;
+    }
+
+    function getHtmlWithFixedLinks(BlogPost $post)
+    {
+        // prefix links with the path to the folder
+        $postHTML = $post->html;
+
+        // if URLs are already correct then spare them
+        $postHTML = str_replace('href="http', '{{HTTP_HREF}}', $postHTML);
+        $postHTML = str_replace('src="' . $post->url_folder, '{{LOCAL_SRC}}', $postHTML);
+        $postHTML = str_replace('href="' . $post->url_folder, '{{LOCAL_HREF}}', $postHTML);
+
+        // add folder path to remaining URLs (all of which are relative)
+        $postHTML = str_replace('href="', 'href="' . $post->url_folder . '/', $postHTML);
+        $postHTML = str_replace('src="', 'src="' . $post->url_folder . '/', $postHTML);
+
+        // restore the spared URLs
+        $postHTML = str_replace('{{HTTP_HREF}}', 'href="http', $postHTML);
+        $postHTML = str_replace('{{LOCAL_SRC}}', 'src="' . $post->url_folder, $postHTML);
+        $postHTML = str_replace('{{LOCAL_HREF}}', 'href="' . $post->url_folder, $postHTML);
+
+        return $postHTML;
     }
 }
