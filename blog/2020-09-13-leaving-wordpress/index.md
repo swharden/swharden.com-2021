@@ -1,8 +1,6 @@
 ---
 title: Leaving WordPress
 date: 2020-09-13 18:15:00
-tags:
-  - testing
 ---
 
 # Leaving WordPress
@@ -22,6 +20,14 @@ tags:
 **The system I'm using now is pretty simple.** Every post is a folder, and each folder contains a markdown file along with all of the images and files that post references. At the top of the markdown file is a little header which has information like title, date, and categories (tags). I use a PHP script route HTTP requests and if a requested folder lacks index.html but has index.md, I serve that using [Parsedown](https://github.com/erusev/parsedown) to convert it to HTML. I also add a few tweaks to do things like convert YouTube links to embedded videos and add syntax highlighting to code blocks. Backups are easy (I just zip the folder), and the website could be committed to source control. I'm leaning away from this because it's about 1GB (lots of images), but I'll consider it. Also, the URL is just the path to the folder.
 
 **There's a clear path toward generating a static site.** If a folder lacks index.html, index.md is parsed and served. Switching to and from a static site can be achieved just by pre-converting all the markdown files to html and deleting them. I'll probably keep working on refining the PHP script until the conversions are reliably processing like I desire, then convert most of the old pages to static files. The cool thing about this method is that it lets me serve some posts statically but others dynamically.
+
+<div align="center">
+
+Wordpress (slow) | Markdown (fast)
+---|---
+<img src="benchmark-slow.png"> | <img src="benchmark-fast.png">
+
+</div>
 
 ## Performing the Conversion
 

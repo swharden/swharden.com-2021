@@ -29,14 +29,20 @@ class PageOfPosts extends Page
             $post = new BlogPost($article->markdown_file_path, false, true, true);
             $postHTML = $post->html;
 
-            // spare traditional URLs
-            $postHTML = str_replace('href="http', '{{HREF_HTTP}}', $postHTML);
+            // if URLs are already correct then spare them
+            $postHTML = str_replace('href="http', '{{HTTP_HREF}}', $postHTML);
+            $postHTML = str_replace('src="' . $post->url_folder, '{{LOCAL_SRC}}', $postHTML);
+            $postHTML = str_replace('href="' . $post->url_folder, '{{LOCAL_HREF}}', $postHTML);
 
-            // add folder path to relative URLs
+            // add folder path to remaining URLs (all of which are relative)
             $postHTML = str_replace('href="', 'href="' . $post->url_folder . '/', $postHTML);
+            $postHTML = str_replace('src="', 'src="' . $post->url_folder . '/', $postHTML);
 
-            // restore traditional URLs
-            $postHTML = str_replace('{{HREF_HTTP}}', 'href="http', $postHTML);
+            // restore the spared URLs
+            $postHTML = str_replace('{{HTTP_HREF}}', 'href="http', $postHTML);
+            $postHTML = str_replace('{{LOCAL_SRC}}', 'src="' . $post->url_folder, $postHTML);
+            $postHTML = str_replace('{{LOCAL_HREF}}', 'href="' . $post->url_folder, $postHTML);
+
             $html .= $postHTML;
         }
 
