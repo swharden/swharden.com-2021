@@ -1,3 +1,6 @@
+# ignore the blog folder (it's where I work on new unpublished articles)
+blog/
+
 # Byte-compiled / optimized / DLL files
 __pycache__/
 *.py[cod]
