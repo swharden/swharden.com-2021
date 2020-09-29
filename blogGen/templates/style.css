@@ -47,15 +47,46 @@ body {
 }
 
 #headerMenu {
+    display: flex;
+    justify-content: flex-end;
+    flex-wrap: wrap;
     color: #F6F4F8;
     width: 100%;
-    text-align: right;
     font-size: 1.4em;
     padding-top: .5em;
 }
 
 #headerMenu .menuButton {
-    display: inline;
+    display: inline-block;
+}
+
+#headerMenu .menuButtonDropdown {
+    text-align: left;
+    display: none;
+    position: absolute;
+    padding-top: .5em;
+    line-height: 2em;
+    z-index: 1;
+}
+
+#headerMenu .menuButton:hover .menuButtonDropdown {
+    display: block;
+}
+
+#headerMenu .menuButton a {
+    /*font-size: 1.2em;*/
+    text-decoration: none;
+    color: #F6F4F8;
+    padding: .5em 1em .5em 1em;
+}
+
+#headerMenu .menuButton a:hover {
+    color: white;
+    background-color: rgba(0, 0, 0, .5);
+}
+
+#headerMenu a:active {
+    background-color: rgba(0, 0, 0, .2);
 }
 
 #githubButtonWrapper {
@@ -73,10 +104,13 @@ body {
     }
     #headerMenu .menuButton {
         line-height: 200%;
-        background-color: rgba(0, 0, 0, .2);
         padding: .5em;
         text-decoration: none;
         color: #F6F4F8;
+    }
+    #headerMenu .menuButton:hover .menuButtonDropdown {
+        display: block;
+        background-color: rgba(0, 0, 0, .5);
     }
     #githubButtonWrapper {
         visibility: hidden;
@@ -102,22 +136,6 @@ body {
     #md2html iframe {
         height: 300px;
     }
-}
-
-#headerMenu .menuButton a {
-    /*font-size: 1.2em;*/
-    text-decoration: none;
-    color: #F6F4F8;
-    padding: .5em 1em .5em 1em;
-}
-
-#headerMenu .menuButton a:hover {
-    color: white;
-    background-color: rgba(0, 0, 0, .5);
-}
-
-#headerMenu a:active {
-    background-color: rgba(0, 0, 0, .2);
 }
 
 article {
