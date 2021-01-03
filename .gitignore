@@ -1,5 +1,15 @@
-# ignore the blog folder (it's where I work on new unpublished articles)
+# ignore actual log files
+/tools/logs/swharden.com-*
+
+# ignore blog posts (works in development)
 blog/
+
+# ignore logs
+*_log*.gz
+
+
+
+
 
 # Byte-compiled / optimized / DLL files
 __pycache__/
@@ -130,3 +140,4 @@ dmypy.json
 
 # Pyre type checker
 .pyre/
+tools/logs/report.html
