@@ -1,3 +1,4 @@
+import os
 import gzip
 import glob
 
@@ -9,7 +10,7 @@ def getLatestLogLines() -> list:
     return lines
 
 
-def getRequestedFiles(lines: list, code: int = 404):
+def getRequestedFiles(lines: list, code: int):
 
     requests = {}
     referrals = {}
@@ -41,8 +42,9 @@ def getRequestedFiles(lines: list, code: int = 404):
     return countByRequest, referrals
 
 
-def makeReport(reqs, refs, minReqs=2):
-    html = ""
+def reportMissing404(logLines: str, minReqs=2):
+    reqs, refs = getRequestedFiles(logLines, 404)
+    html = "<h1>404 Not Found Report</h1>"
     html += "<table border=1>"
     html += "<tr><th>404s</th><th>URL</th><th>referrers</th></tr>"
 
@@ -54,7 +56,6 @@ def makeReport(reqs, refs, minReqs=2):
         url = "https://swharden.com" + requestPath
         realRefs = [x for x in refs[key] if x != "-"]
         refHtml = "".join([f"<li>{x}</li>" for x in realRefs])
-        print(count, requestPath, "from", len(realRefs))
 
         html += f"<tr>"
         html += f"<td>{count}</td>"
@@ -64,11 +65,55 @@ def makeReport(reqs, refs, minReqs=2):
 
     html += "</table>"
 
-    with open("report.html", 'w') as f:
+    filePath = os.path.abspath("404.html")
+    with open(filePath, 'w') as f:
         f.write(html)
+    print("Saved:", filePath)
+    os.system("explorer.exe " + filePath)
+
+
+def reportOk200(logLines: str, minReqs=2):
+    reqs, refs = getRequestedFiles(logLines, 200)
+    html = "<h1>200 OK Report</h1>"
+    html += "<table border=1>"
+    html += "<tr><th>200</th><th>URL</th><th>External Refs</th></tr>"
+
+    for key in reqs:
+        if "/qrss/" in key:
+            continue
+        if reqs[key] < minReqs:
+            break
+        count = reqs[key]
+        requestPath = key
+        url = "https://swharden.com" + requestPath
+        realRefs = [x for x in refs[key] if len(x.strip()) > 5]
+        realRefs = [x for x in realRefs if not "swharden.com" in x]
+        realRefs = [x for x in realRefs if not "google.com/" in x]
+        realRefs = [x for x in realRefs if not "bing.com/" in x]
+        realRefs = [x for x in realRefs if not "duckduckgo.com/" in x]
+        realRefs = [x for x in realRefs if not "youtube.com/" in x]
+        realRefs = [x for x in realRefs if not "googleusercontent.com/" in x]
+        realRefs = [x for x in realRefs if not "github.com/" in x]
+        if not len(realRefs):
+            continue
+
+        refHtml = "".join([f"<li>{x}</li>" for x in sorted(realRefs)])
+        html += f"<tr>"
+        html += f"<td>{count}</td>"
+        html += f"<td><a href='{url}'>{requestPath}</a></td>"
+        html += f"<td><ul>{refHtml}</td></ul>"
+        html += f"</tr>"
+
+    html += "</table>"
+
+    filePath = os.path.abspath("200.html")
+    with open(filePath, 'w') as f:
+        f.write(html)
+    print("Saved:", filePath)
+    os.system("explorer.exe " + filePath)
 
 
 if __name__ == "__main__":
     logLines = getLatestLogLines()
-    reqs, refs = getRequestedFiles(logLines)
-    makeReport(reqs, refs)
+    reportMissing404(logLines)
+    reportOk200(logLines)

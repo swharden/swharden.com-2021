@@ -1,2 +1,1 @@
 python report.py
-pause
