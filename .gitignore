@@ -143,3 +143,4 @@ dmypy.json
 tools/logs/report.html
 tools/logs/200.html
 tools/logs/404.html
+tools/logs/.secrets
