@@ -1,6 +1,8 @@
 import os
 import gzip
 import glob
+from ftplib import FTP
+import datetime
 
 
 def getLatestLogLines() -> list:
@@ -113,7 +115,36 @@ def reportOk200(logLines: str, minReqs=2):
     os.system("explorer.exe " + filePath)
 
 
+def downloadYesterdaysLogs():
+
+    with open(".secrets") as f:
+        user, pw = f.read().strip().split(":")
+
+        logDate = datetime.datetime.now()
+        logDate -= datetime.timedelta(days=1)
+        logFileName = "-".join(
+            [
+                "swharden.com",
+                "ssl_log",
+                f"{logDate.day:02d}",
+                f"{logDate.month:02d}",
+                f"{logDate.year:04d}",
+            ]
+        ) + ".gz"
+
+    with FTP('swharden.com') as ftp:
+        ftp.login(user, pw)
+        fileNames = ftp.nlst()
+        if not logFileName in fileNames:
+            raise Exception(f"file not found: {logFileName}")
+        print(f"downloading {logFileName}...")
+        with open(logFileName, 'wb') as fp:
+            ftp.retrbinary(f'RETR {logFileName}', fp.write)
+        print(f"DONE")
+
+
 if __name__ == "__main__":
+    downloadYesterdaysLogs()
     logLines = getLatestLogLines()
     reportMissing404(logLines)
     reportOk200(logLines)
