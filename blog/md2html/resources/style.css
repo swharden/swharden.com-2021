@@ -53,38 +53,37 @@ blockquote p {
 
 /* custom styles for images and tables */
 
-article .center{
+article .center {
     /* TODO: replace this with text-center in all markdown */
     text-align: center;
 }
 
 article img {
     max-width: 100% !important;
+    margin-top: 1em !important;
+    margin-bottom: 1em !important;
 }
 
-article div .border {
-    border: none !important;
-}
-
-.thumbnail img {
+article .img-xs img {
     height: 9em !important;
     margin: .5em !important;
 }
 
-.small img {
+article .img-s img {
     max-width: 35% !important;
     margin: 1em !important;
 }
 
-.medium img {
+article .img-m img {
     max-width: 65% !important;
 }
 
-.large img {
-    max-width: 100% !important;
+article .img-border img {
+    border: 1px solid black;
+    box-shadow: 5px 5px 10px rgba(0, 0, 0, .2);
 }
 
-.border img, .border iframe {
+article iframe {
     border: 1px solid black;
     box-shadow: 5px 5px 10px rgba(0, 0, 0, .2);
 }

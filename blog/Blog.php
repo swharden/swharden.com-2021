@@ -12,8 +12,8 @@ require_once(dirname(__file__) . "/md2html/ArticleInfo.php");
 class Blog
 {
     //private $BLOG_URL = 'https://swharden.com/blog';
-	private $BLOG_URL = 'http://localhost:8080/blog';
-	
+    private $BLOG_URL = 'http://localhost:8080/blog';
+
 
     /** Serve the Nth page of blog posts (starting at 0) */
     public function getPageHTML(int $pageIndex, string $tag = "", int $articlesPerPage = 5): string
@@ -23,6 +23,7 @@ class Blog
 
         // determine which articles to show
         $pageIndex = max(0, $pageIndex);
+        $pageNumber = $pageIndex + 1;
         $pageCount = count($articlePaths) / $articlesPerPage;
         $firstIndex = $articlesPerPage * $pageIndex;
         $isValidPageIndex = ($pageIndex >= 0);
@@ -30,19 +31,19 @@ class Blog
 
         // add the articles to the page
         $page = new Page();
-        $pageNumber = $pageIndex + 1;
-
-        $tagLabel = $tag == "" ? "Blog" : $tag;
-        $tag = str_replace("-", " ", $tagLabel);
-        $page->setTitle(ucwords($tag) . " - Page $pageNumber");
-
         if (isset($_GET['page']))
             $page->disableIndexing();
         $page->enablePermalink(true);
-        $page->addArticles($articlesToShow);
+        $page->addArticles($articlesToShow, $this->BLOG_URL);
+        
+        // Set the title based on tag and page number
+        $titleTag = $tag == "" ? "Blog" : $tag;
+        $titleTag = str_replace("-", " ", $titleTag);
+        $titleTag = ucwords($titleTag);
+        $page->setTitle("$titleTag - Page $pageNumber");
 
         // add pagination links for every page in the set
-		$baseUrl = ($tag == "") ? $this->BLOG_URL : $this->BLOG_URL . "/category/$tag";
+        $baseUrl = ($tag == "") ? $this->BLOG_URL : $this->BLOG_URL . "/category/$tag";
         for ($i = 0; $i < $pageCount; $i++) {
             $pageNumber = $i + 1;
             $pageIsActive = ($i == $pageIndex);
