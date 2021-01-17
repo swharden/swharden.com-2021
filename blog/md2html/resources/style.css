@@ -43,10 +43,27 @@ blockquote p {
     overflow-x: auto;
 }
 
+/* accent color behind the content at the top of the page */
+
+.backSplash {
+    position: absolute;
+    background-color: #003366;
+    background-image: url(data:image/gif;base64,R0lGODlhBwAHAJEAAAA0ZwAzZgAyZQAAACH5BAAAAAAALAAAAAAHAAcAAAIOBCIZl7KoTFvMGUjxbQUAOw==);
+}
+
 /* custom styles for images and tables */
 
-.center {
+article .center{
+    /* TODO: replace this with text-center in all markdown */
     text-align: center;
+}
+
+article img {
+    max-width: 100% !important;
+}
+
+article div .border {
+    border: none !important;
 }
 
 .thumbnail img {
@@ -67,12 +84,7 @@ blockquote p {
     max-width: 100% !important;
 }
 
-.center iframe, .center table {
-    margin: 2em auto 2em auto !important;
-}
-
 .border img, .border iframe {
-    margin: 2em;
     border: 1px solid black;
     box-shadow: 5px 5px 10px rgba(0, 0, 0, .2);
 }

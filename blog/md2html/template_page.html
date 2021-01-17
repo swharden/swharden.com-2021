@@ -10,6 +10,8 @@
   <script src="resources/prettify.js"></script>
   <title>{{title}}</title>
   <meta name='description' content='{{description}}' />
+
+  <!-- Should this page be indexed? -->
   <meta name="robots" content="{{robotsContent}}">
 
   <!-- Ads -->
@@ -29,7 +31,7 @@
 <body class="bg-light">
 
   <!-- BACKGROUND SPLASH COLOR -->
-  <div class="h-50 w-100" style="position: absolute; background-color: #00523f"></div>
+  <div class="h-50 w-100 backSplash"></div>
 
   <!-- CENTER CONTAINER -->
   <div class="container-md mx-auto" style="position: relative">
@@ -60,13 +62,13 @@
 
         <!-- CUSTOMIZE PAGE TITLES -->
         <header class="row mt-3 p-2 text-light">
-          <div class="display-3 fw-normal">
+          <div class="display-3 fw-normal lh-1">
             <a href="{{baseUrl}}/" style="color: inherit;">
-              md2html
+              SWHarden.com
             </a>
           </div>
-          <div class="fs-6" style="opacity: 50%;">
-            Dynamic Markdown to HTML conversion with PHP
+          <div class="fs-6 lh-1 mb-3" style="opacity: 50%;">
+            The personal website of Scott W Harden
           </div>
         </header>
 
