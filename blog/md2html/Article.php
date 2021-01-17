@@ -57,8 +57,9 @@ class Article
         // make YouTube links embedded videos
         if (strstr($url, "youtube.com/") || strstr($url, "youtu.be/")) {
             $url = "https://www.youtube.com/embed/" . basename($url);
-            return "<div class='ratio ratio-16x9'><iframe src='$url' frameborder='0' allowfullscreen " .
+            $html = "<div class='ratio ratio-16x9'><iframe src='$url' class='border shadow' frameborder='0' allowfullscreen " .
                 "allow='accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture'></iframe></div>";
+            return "<div class='container my-5'>$html</div>";
         }
 
         // make images link to themselves

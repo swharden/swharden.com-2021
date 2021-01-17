@@ -60,18 +60,16 @@ article .center {
 
 article img {
     max-width: 100% !important;
-    margin-top: 1em !important;
-    margin-bottom: 1em !important;
+    margin-top: 1em;
+    margin-bottom: 1em;
 }
 
 article .img-xs img {
     height: 9em !important;
-    margin: .5em !important;
 }
 
 article .img-s img {
     max-width: 35% !important;
-    margin: 1em !important;
 }
 
 article .img-m img {
@@ -79,11 +77,6 @@ article .img-m img {
 }
 
 article .img-border img {
-    border: 1px solid black;
-    box-shadow: 5px 5px 10px rgba(0, 0, 0, .2);
-}
-
-article iframe {
     border: 1px solid black;
     box-shadow: 5px 5px 10px rgba(0, 0, 0, .2);
 }
