@@ -1,5 +1,6 @@
 <?php
 
-require_once(__DIR__ . "/../../blogGen/ListOfPosts.php");
-$post = new ListOfPosts(__DIR__ . "/../");
-echo $post;
+// this script lists all blog articles, dates, and tags
+require('../Blog.php');
+$blog = new Blog();
+echo $blog->getPostIndexHTML(0, "");

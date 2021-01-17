@@ -1,41 +1,20 @@
 <?php
 
-// the last folder is the page number
-$req = strtok($_SERVER["REQUEST_URI"], '?');
-$lastFolder = basename($req);
-$secondToLastFolder = basename(dirname($req));
+// this script serves the Nth page of blog posts (where N is defined by the URL)
+// restricted to a specific category
 
-$category = "all";
-$page = 1;
-if ($lastFolder == "category") {
-    // no category or number given, default vaues are OK
-} else if ($secondToLastFolder == "category") {
-    // category given but no page
-    $category = $lastFolder;
-} else {
-    if (intval($lastFolder)) {
-        // category and page given
-        $category = $secondToLastFolder;
-        $page = intval($lastFolder);
-    } else {
-        // category given but invalid page
-        $category = $secondToLastFolder;
-    }
+require('../Blog.php');
+$finalFolderName = basename(strtok($_SERVER["REQUEST_URI"], '?'));
+
+$pageIndex = 0;
+if (isset($_GET['page'])) {
+    $pageIndex = intval($_GET['page']) - 1;
 }
 
-/*
-require_once("../../blogGen/views/PageOfPosts.php");
-$page = new PageOfPosts(__DIR__."/../", intval($finalFolderName));
-echo $page;
-
-
-require_once("../../blogGen/PageOfPosts.php");
-$post = new PageOfPosts(__DIR__ . "/../", intval($finalFolderName)); 
-echo $post;
-
-string $blog_post_folder, int $page_number, int $posts_per_page = 5, string $tag = "all"
-*/
-
-require_once("../../blogGen/PageOfPosts.php");
-$post = new PageOfPosts(__DIR__ . "/../", $page, 5, $category); 
-echo $post;
+$blog = new Blog();
+if ($finalFolderName == "category") {
+    echo $blog->getCategoryIndexHTML();
+} else {
+    $category = $finalFolderName;
+    echo $blog->getPageHTML($pageIndex, $category);
+}
