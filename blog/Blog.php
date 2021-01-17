@@ -23,7 +23,6 @@ class Blog
 
         // determine which articles to show
         $pageIndex = max(0, $pageIndex);
-        $pageNumber = $pageIndex + 1;
         $pageCount = count($articlePaths) / $articlesPerPage;
         $firstIndex = $articlesPerPage * $pageIndex;
         $isValidPageIndex = ($pageIndex >= 0);
@@ -31,19 +30,19 @@ class Blog
 
         // add the articles to the page
         $page = new Page();
+        $pageNumber = $pageIndex + 1;
+
+        $titlePrimary = $tag == "" ? "Blog" : ucwords(str_replace("-", " ", $tag));
+        $titleSecondary = "Page $pageNumber";
+        $page->setTitle("$titlePrimary - $titleSecondary");
+
         if (isset($_GET['page']))
             $page->disableIndexing();
-        $page->enablePermalink(true);
-        $page->addArticles($articlesToShow, $this->BLOG_URL);
-
-        // Set the title based on tag and page number
-        $titleTag = $tag == "" ? "Blog" : $tag;
-        $titleTag = str_replace("-", " ", $titleTag);
-        $titleTag = ucwords($titleTag);
-        $page->setTitle("$titleTag - Page $pageNumber");
+        $page->enablePermalink(true, $this->BLOG_URL);
+        $page->addArticles($articlesToShow);
 
         // add pagination links for every page in the set
-        $baseUrl = ($tag == "") ? $this->BLOG_URL : $this->BLOG_URL . "/category/$tag";
+		$baseUrl = ($tag == "") ? $this->BLOG_URL : $this->BLOG_URL . "/category/$tag";
         for ($i = 0; $i < $pageCount; $i++) {
             $pageNumber = $i + 1;
             $pageIsActive = ($i == $pageIndex);
@@ -87,7 +86,7 @@ class Blog
 
         $html = "<h1>Blog Post Categories</h1>";
         foreach ($tags as $tag) {
-            $html .= "<h2>" . ucwords($tag) . "</h2>";
+            $html .= "<h2>$tag</h2>";
             $sanTag = sanitizeLinkUrl($tag);
             $html .= "<ul>";
             foreach ($infos as $info) {

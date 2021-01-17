@@ -34,7 +34,6 @@ class Article
         $this->html = $Parsedown->text(implode("\n", $mdLines));
 
         // custom modifications to the HTML
-        $this->html = $this->addBaseUrlToLinksAndImages($this->html, $baseUrl);
         $this->html = $this->addAnchorsToHeadingsAndUpdateTOC($this->html);
         $this->html = $this->prettyPrintCodeBlocks($this->html);
     }
@@ -78,20 +77,6 @@ class Article
 
         // we didn't do anything special, so return the URL so it will be a clickable link
         return $url;
-    }
-
-    private function addBaseUrlToLinksAndImages(string $html, string $baseUrl): string
-    {
-        if ($baseUrl == "")
-            return $html;
-
-        $html = str_replace("<img src='", "<img src='{{baseUrl}}", $html);
-        $html = str_replace("<img src=\"", "<img src=\"{{baseUrl}}", $html);
-        $html = str_replace("<a href='", "<a href='{{baseUrl}}", $html);
-        $html = str_replace("<a href=\"", "<a href=\"{{baseUrl}}", $html);
-        $html = str_replace('{{baseUrl}}http', 'http', $html);
-        $html = str_replace('{{baseUrl}}', $baseUrl . '/' . $this->info->folderName . '/', $html);
-        return $html;
     }
 
     private function addAnchorsToHeadingsAndUpdateTOC($html): string
