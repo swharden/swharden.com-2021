@@ -1,5 +1,7 @@
 <?php
 
-require_once(__DIR__."/../blogGen/MarkdownPage.php");
-$post = new MarkdownPage(__DIR__ . "/index.md");
-echo $post;
+// build the page from multiple articles
+require('../blog/md2html/Page.php');
+$page = new Page();
+$page->addArticle('index.md');
+echo $page->getHtml();

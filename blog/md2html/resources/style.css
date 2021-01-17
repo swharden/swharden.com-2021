@@ -43,13 +43,38 @@ blockquote p {
     overflow-x: auto;
 }
 
+/* custom styles for images and tables */
+
 .center {
-    /* 
-    TODO: old blog posts use this. 
-    Switch them to use text-center 
-    */
-    margin: auto;
     text-align: center;
+}
+
+.thumbnail img {
+    height: 9em !important;
+    margin: .5em !important;
+}
+
+.small img {
+    max-width: 35% !important;
+    margin: 1em !important;
+}
+
+.medium img {
+    max-width: 65% !important;
+}
+
+.large img {
+    max-width: 100% !important;
+}
+
+.center iframe, .center table {
+    margin: 2em auto 2em auto !important;
+}
+
+.border img, .border iframe {
+    margin: 2em;
+    border: 1px solid black;
+    box-shadow: 5px 5px 10px rgba(0, 0, 0, .2);
 }
 
 /* GitHub-style tables */

@@ -6,12 +6,9 @@ title: Scott W Harden, DMD, PhD
 
 **I'm Scott W Harden, and this is my personal website.** Although my formal education is in molecular biology, dentistry, and neuroscience, I am passionate about computer programming and electrical engineering. I use this website to share things I find interesting, with blog posts dating back to 2001 (when I was 15). I only update this page every few years, so the best way to see what I've been up to lately is to [look me up on GitHub](https://github.com/swharden).
 
-<div class="center small border">
-
-<div style='margin: 5%; display: inline;'><a href='scott-w-harden.jpg'><img src="scott-w-harden.jpg"></a></div>
-<div style='margin: 5%; display: inline;'><a href='scott-w-harden-dentist.jpg'><img src="scott-w-harden-dentist.jpg"></a></div>
-
-
+<div class="center">
+<a href='scott-w-harden.jpg'><img src='scott-w-harden.jpg' class='img-fluid' style='height: 300px;'></a>
+<a href='scott-w-harden-dentist.jpg'><img src='scott-w-harden-dentist.jpg' class='img-fluid' style='height: 300px;'></a>
 </div>
 
 ## Contact
@@ -95,7 +92,7 @@ Also worth noting is my ongoing real-time QRSS Plus project.
 
 **I was diagnosed with cancer** in 2012 and began treatment in 2018-2019. Treatments for my [peripheral T-cell lymphoma](https://lymphoma.org/aboutlymphoma/nhl/ptcl/) have included chemotherapy, radiation treatment, and an autologous bone marrow transplant. My medical updates are chronicled on [swharden.com/med](https://www.swharden.com/med/).
 
-<div class="center medium border">
+<div class="center medium">
 
 ![](scott-harden-cancer-after-transplant.jpg)
 

@@ -7,7 +7,7 @@
   <link href="resources/bootstrap.css" rel="stylesheet" />
   <link href="resources/style.css" rel="stylesheet" />
   <link rel="shortcut icon" href="resources/favicon.ico" />
-  <script src='https://cdn.jsdelivr.net/gh/google/code-prettify@master/loader/run_prettify.js'></script>
+  <script src="resources/prettify.js"></script>
   <title>{{title}}</title>
   <meta name='description' content='{{description}}' />
   <meta name="robots" content="{{robotsContent}}">
@@ -38,9 +38,7 @@
 
         <!-- CUSTOMIZE NAVIGATION -->
         <nav class="text-end p-2">
-          <a class="btn btn-lg menuButton ms-2 text-light" href="{{baseUrl}}/pyabf" role="button">pyABF</a>
-          <a class="btn btn-lg menuButton ms-2 text-light" href="{{baseUrl}}/ljpcalc" role="button">LJPcalc</a>
-          <a class="btn btn-lg menuButton ms-2 text-light" href="{{baseUrl}}/csdv" role="button">C# Data</a>
+          <a class="btn btn-lg menuButton ms-2 text-light" href="{{baseUrl}}/" role="button">Home</a>
 
           <div class="dropdown d-inline-block">
             <a class="btn btn-lg menuButton ms-2 text-light dropdown-toggle" role="button" id="dropdownMenuLink"
@@ -49,14 +47,15 @@
             </a>
 
             <ul class="dropdown-menu" aria-labelledby="dropdownMenuLink">
-              <li><a class="dropdown-item" href="{{baseUrl}}/blog/">Latest Posts</a></li>
-              <li><a class="dropdown-item" href="{{baseUrl}}/blog/page/2">Page 2</a></li>
-              <li><a class="dropdown-item" href="{{baseUrl}}/blog/posts/">List of All Posts</a></li>
-              <li><a class="dropdown-item" href="{{baseUrl}}/blog/category/">Categories</a></li>
-              <li><a class="dropdown-item" href="{{baseUrl}}/blog/category/circuit">Circuitry</a></li>
-              <li><a class="dropdown-item" href="{{baseUrl}}/blog/feed/">RSS Feed</a></li>
+              <li><a class="dropdown-item" href="{{baseUrl}}/">Latest Posts</a></li>
+              <li><a class="dropdown-item" href="{{baseUrl}}/posts/">List of Posts</a></li>
+              <li><a class="dropdown-item" href="{{baseUrl}}/category/">Categories</a></li>
+              <li><a class="dropdown-item" href="{{baseUrl}}/feed/">RSS Feed</a></li>
             </ul>
           </div>
+          
+          <a class="btn btn-lg menuButton ms-2 text-light" href="{{baseUrl}}/../about" role="button">About</a>
+
         </nav>
 
         <!-- CUSTOMIZE PAGE TITLES -->

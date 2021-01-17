@@ -2,7 +2,7 @@
 /tools/logs/swharden.com-*
 
 # ignore blog posts (works in development)
-blog/
+blog/20*
 
 # ignore logs
 *_log*.gz
