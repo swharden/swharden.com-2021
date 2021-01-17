@@ -35,7 +35,7 @@ class Blog
             $page->disableIndexing();
         $page->enablePermalink(true);
         $page->addArticles($articlesToShow, $this->BLOG_URL);
-        
+
         // Set the title based on tag and page number
         $titleTag = $tag == "" ? "Blog" : $tag;
         $titleTag = str_replace("-", " ", $titleTag);
@@ -87,7 +87,7 @@ class Blog
 
         $html = "<h1>Blog Post Categories</h1>";
         foreach ($tags as $tag) {
-            $html .= "<h2>$tag</h2>";
+            $html .= "<h2>" . ucwords($tag) . "</h2>";
             $sanTag = sanitizeLinkUrl($tag);
             $html .= "<ul>";
             foreach ($infos as $info) {
