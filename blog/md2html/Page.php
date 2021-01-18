@@ -125,6 +125,7 @@ class Page
                 }
                 $articleHtml = $articleTemplate;
                 $articleHtml = str_replace("{{title}}", $article->info->title, $articleHtml);
+                $articleHtml = str_replace("{{alert}}", $this->getObsoleteMessage($article), $articleHtml);
                 $articleHtml = str_replace("{{content}}", $contentHtml, $articleHtml);
                 $articleHtml = str_replace("{{permalink}}", $this->getPermalinkHtml($article), $articleHtml);
                 $articleHtml = str_replace("{{source}}", $article->sourceHtml, $articleHtml);
@@ -144,6 +145,25 @@ class Page
             }
         }
         return $html;
+    }
+
+    private function getObsoleteMessage(Article $article)
+    {
+        if (in_array("old", $article->info->tags)) {
+            $html = "";
+            $html .= "<div class='alert alert-danger my-3' role='alert'>";
+            $html .= "<h5 class='alert-heading'>⚠️ WARNING: This article is obsolete</h5>";
+            $html .= "<div>";
+            $html .= "Articles typically receive this designation when the technology they describe ";
+            $html .= "is no longer relevant, code provided is later deemed to be of poor quality, or the topics discussed are ";
+            $html .= "better presented in future articles. Articles like this are retained for the sake of preservation, but ";
+            $html .= "their content should be critically assessed. ";
+            $html .= "</div>";
+            $html .= "</div>";
+            return $html;
+        } else {
+            return "<!-- no article alerts -->";
+        }
     }
 
     private function getPageHtml(): string
