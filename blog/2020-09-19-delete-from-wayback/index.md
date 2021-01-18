@@ -8,7 +8,7 @@ title: How I Deleted my Site from the Wayback Machine
 
 <div class="text-center img-border">
 
-![](delete-waybackmachine.png)
+[![](delete-waybackmachine_thumb.jpg)](delete-waybackmachine.png)
 
 </div>
 

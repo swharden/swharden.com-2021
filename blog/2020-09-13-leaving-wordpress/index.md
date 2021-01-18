@@ -9,7 +9,7 @@ date: 2020-09-13 18:15:00
 
 <div class="text-center">
 
-![](github.png)
+[![](github_thumb.jpg)](github.png)
 
 </div>
 
