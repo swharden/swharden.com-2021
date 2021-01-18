@@ -42,12 +42,14 @@ class Blog
         $page->addArticles($articlesToShow);
 
         // add pagination links for every page in the set
-		$baseUrl = ($tag == "") ? $this->BLOG_URL : $this->BLOG_URL . "/category/$tag";
+        $baseUrl = ($tag == "") ? $this->BLOG_URL : $this->BLOG_URL . "/category/$tag";
         for ($i = 0; $i < $pageCount; $i++) {
             $pageNumber = $i + 1;
             $pageIsActive = ($i == $pageIndex);
             $pageUrl = ($i == 0) ? $baseUrl : $baseUrl . "/?page=$pageNumber";
-            $page->addPagination("$pageNumber", $pageUrl, $pageIsActive);
+            $pageLabel = "$pageNumber";
+            $pageIsEnabled = true;
+            $page->pagination->addNumberedPage($pageLabel, $pageUrl, $pageIsActive, $pageIsEnabled);
         }
 
         return $page->getHtml();
@@ -174,21 +176,14 @@ class Blog
     /** Return an array of paths to markdown files in reverse lexicographical order */
     private function getBlogArticlePaths(string $tag = ""): array
     {
-        $blogPath = realpath(dirname(__file__));
-        $mdPaths = [];
-        $dir = new DirectoryIterator($blogPath);
-        foreach ($dir as $fileinfo) {
-            if ($fileinfo->isDot())
-                continue;
-            $mdPath =  $blogPath . DIRECTORY_SEPARATOR . $dir . DIRECTORY_SEPARATOR . "index.md";
-            if (file_exists($mdPath)) {
-                if ($tag == "") {
+        $parentFolder = realpath(dirname(__file__));
+        foreach (glob("$parentFolder/*/index.md") as $mdPath) {
+            if ($tag == "") {
+                $mdPaths[] = $mdPath;
+            } else {
+                $info = new ArticleInfo($mdPath);
+                if (in_array($tag, $info->tagsSanitized))
                     $mdPaths[] = $mdPath;
-                } else {
-                    $info = new ArticleInfo($mdPath);
-                    if (in_array($tag, $info->tagsSanitized))
-                        $mdPaths[] = $mdPath;
-                }
             }
         }
         rsort($mdPaths);
