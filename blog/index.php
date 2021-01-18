@@ -10,4 +10,4 @@ if (isset($_GET['page'])) {
 }
 
 $blog = new Blog();
-echo $blog->getPageHTML($pageIndex, "");
+echo $blog->getFrontPageHTML();
