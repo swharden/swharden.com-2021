@@ -84,7 +84,7 @@ _The best way to see what I've been up to lately is to [check out my GitHub](htt
 
 **I was diagnosed with cancer** in 2012 ([peripheral T-cell lymphoma](https://lymphoma.org/aboutlymphoma/nhl/ptcl/)) and began treatments in 2018 including chemotherapy, radiation therapy, and an autologous bone marrow transplant. My medical updates are chronicled on [swharden.com/med](https://www.swharden.com/med/)
 
-<div class="center medium">
+<div class="text-center img-medium img-border">
 
 ![](scott-harden-cancer-after-transplant.jpg)
 
