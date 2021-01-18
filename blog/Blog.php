@@ -75,13 +75,22 @@ class Blog
     /** Serve a page listing all blog posts */
     public function getPostIndexHTML(): string
     {
-        $html = "<h1>All Blog Posts</h1>";
-        $html .= "<ul>";
+        $htmlLines = [];
+
         foreach ($this->getBlogArticlePaths() as $articlePath) {
             $info = new ArticleInfo($articlePath);
-            $html .= $this->getArticleLi($info);
+            $url = $this->BLOG_URL . "/" . basename(dirname($info->path));
+            $htmlLines[] = $this->getArticleLi($info->title, $info->dateStringShort, $url, $info->tags);
         }
-        $html .= "</ul>";
+
+        foreach (include('BlogPostsLocked.php') as $lockedParts) {
+            $htmlLines[] = $this->getArticleLi($lockedParts[1], $lockedParts[0], "", []);
+        }
+
+        rsort($htmlLines);
+
+        $html = "<h1>All Blog Posts</h1>";
+        $html .= "<ul>" . implode("", $htmlLines) . "</ul>";
 
         $page = new Page();
         $page->setTitle("All Blog Posts");
@@ -105,12 +114,13 @@ class Blog
 
         $html = "<h1>Blog Post Categories</h1>";
         foreach ($tags as $tag) {
-            $html .= "<h2>$tag</h2>";
+            $html .= "<h2>" . ucwords($tag) . "</h2>";
             $sanTag = sanitizeLinkUrl($tag);
             $html .= "<ul>";
             foreach ($infos as $info) {
                 if (in_array($sanTag, $info->tagsSanitized)) {
-                    $html .= $this->getArticleLi($info);
+                    $url = $this->BLOG_URL . "/" . basename(dirname($info->path));
+                    $html .= $this->getArticleLi($info->title, $info->dateStringShort, $url, $info->tags);
                 }
             }
             $html .= "</ul>";
@@ -253,14 +263,18 @@ class Blog
     }
 
     /** Return <li>info</li> about the given article */
-    private function getArticleLi(ArticleInfo $info): string
+    private function getArticleLi(string $title, string $date, string $url, array $tags): string
     {
-        $html = "";
-        $html .= "<li class='my-1'>";
-        $html .= "$info->dateStringShort ";
-        $url = $this->BLOG_URL . "/" . basename(dirname($info->path));
-        $html .= "<a href='$url'><strong>$info->title</strong></a>";
-        foreach ($info->tags as $tag) {
+        $lockIcon = "<svg xmlns='http://www.w3.org/2000/svg' width='12' height='12' fill='#AAAAAA' class='bi bi-lock-fill' " . 
+                    "viewBox='0 0 16 16'><path d='M8 1a2 2 0 0 1 2 2v4H6V3a2 2 0 0 1 2-2zm3 6V3a3 3 0 0 0-6 0v4a2 2 0 0 0-2 2v5a2" . 
+                    " 2 0 0 0 2 2h6a2 2 0 0 0 2-2V9a2 2 0 0 0-2-2z' /></svg>";
+
+        if ($url == "") {
+            return "<li class='my-1'>$date <span title='this post is locked' style='opacity: 50%'>$title $lockIcon</span></li>";
+        }
+
+        $html = "<li class='my-1'>$date <a href='$url'><strong>$title</strong></a>";
+        foreach ($tags as $tag) {
             $bgColor = $this->colorHash($tag);
             $tagUrl = $this->BLOG_URL . "/category/" . sanitizeLinkUrl($tag);
             $html .= "<span class='badge rounded-pill border fw-normal ms-1' style='background-color: $bgColor'>" .

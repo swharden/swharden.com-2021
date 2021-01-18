@@ -1,5 +1,6 @@
 ---
 title: How I Deleted my Site from the Wayback Machine
+date: 2020-09-19
 ---
 
 # Deleted from The Wayback Machine
