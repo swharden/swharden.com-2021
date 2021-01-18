@@ -14,9 +14,24 @@ class Blog
     //private $BLOG_URL = 'https://swharden.com/blog';
     private $BLOG_URL = 'http://localhost:8080/blog';
 
+    /** return all medical category pages with ads disabled and a custom title */
+    public function getMedicalHTML(): string
+    {
+        $html = $this->getPageHTML(0, "med", 999, true);
+        $html = str_replace('<title>Med - Page 1</title>', '<title>SWHarden.com/med - Medical updates for Scott W Harden</title>', $html);
+        return $html;
+    }
+
+    /** return the first 5 pages with ads disabled and a custom title */
+    public function getFrontPageHTML(): string
+    {
+        $html = $this->getPageHTML(0, "", 5, true);
+        $html = str_replace('<title>Blog - Page 1</title>', '<title>SWHarden.com - The personal website of Scott W Harden</title>', $html);
+        return $html;
+    }
 
     /** Serve the Nth page of blog posts (starting at 0) */
-    public function getPageHTML(int $pageIndex, string $tag = "", int $articlesPerPage = 5): string
+    public function getPageHTML(int $pageIndex, string $tag = "", int $articlesPerPage = 5, bool $disableAds = false): string
     {
         // inventory available articles
         $articlePaths = $this->getBlogArticlePaths($tag);
@@ -30,8 +45,10 @@ class Blog
 
         // add the articles to the page
         $page = new Page();
-        $pageNumber = $pageIndex + 1;
+        if ($disableAds)
+            $page->disableAds();
 
+        $pageNumber = $pageIndex + 1;
         $titlePrimary = $tag == "" ? "Blog" : ucwords(str_replace("-", " ", $tag));
         $titleSecondary = "Page $pageNumber";
         $page->setTitle("$titlePrimary - $titleSecondary");
