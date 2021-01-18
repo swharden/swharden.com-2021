@@ -25,7 +25,7 @@ date: 2020-09-13 18:15:00
 
 Wordpress (slow) | Markdown (fast)
 ---|---
-<img src="benchmark-slow.png"> | <img src="benchmark-fast.png">
+<div style='text-align: center;'><img src="benchmark-slow.png"></div> | <div style='text-align: center;'><img src="benchmark-fast.png"></div>
 
 </div>
 
