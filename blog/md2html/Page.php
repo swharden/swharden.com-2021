@@ -137,6 +137,7 @@ class Page
             } else {
                 // this element of the array holds a string of HTML
                 $articleHtml = $articleTemplate;
+                $articleHtml = str_replace("{{alert}}", "", $articleHtml);
                 $articleHtml = str_replace("{{content}}", $article, $articleHtml);
                 $articleHtml = str_replace("{{permalink}}", "", $articleHtml);
                 $articleHtml = str_replace("{{source}}", "", $articleHtml);
