@@ -22,6 +22,8 @@ def getRequestedFiles(lines: list, code: int):
             print("BAD LINE:", line)
             continue
         thisCode = int(parts[2].strip().split(" ")[0])
+        if not len(parts[1]):
+            continue
         thisFile = parts[1].split(" ")[1]
         thisReferral = parts[3]
 
@@ -121,14 +123,13 @@ def downloadYesterdaysLogs():
         user, pw = f.read().strip().split(":")
 
         logDate = datetime.datetime.now()
-        logDate -= datetime.timedelta(days=1)
+        #logDate -= datetime.timedelta(days=1)
         logFileName = "-".join(
             [
                 "swharden.com",
-                "ssl_log",
-                f"{logDate.day:02d}",
-                f"{logDate.month:02d}",
                 f"{logDate.year:04d}",
+                f"{logDate.month:02d}",
+                f"{logDate.day:02d}",
             ]
         ) + ".gz"
 
@@ -143,8 +144,24 @@ def downloadYesterdaysLogs():
         print(f"DONE")
 
 
+def removeOldLines(logLines: list, days: float) -> list:
+    now = datetime.datetime.now()
+    oldest = now - datetime.timedelta(days=days)
+    print(f"Removing logs older than {days} days (before {oldest})")
+    newLines = []
+    for i, line in enumerate(logLines):
+        dateIndex1 = line.find("[")
+        dateIndex2 = line.find("]")
+        dateString = line[dateIndex1+1:dateIndex2]
+        dt = datetime.datetime.strptime(dateString, '%d/%b/%Y:%H:%M:%S +0000')
+        if (dt >= oldest):
+            newLines.append(line)
+    return newLines
+
+
 if __name__ == "__main__":
     downloadYesterdaysLogs()
     logLines = getLatestLogLines()
+    logLines = removeOldLines(logLines, days=2.0)
     reportMissing404(logLines)
     reportOk200(logLines)
